@@ -16,7 +16,7 @@ const Loading: React.FC = () => {
 const App: React.FC = () => {
     return (
         <Suspense fallback={<Loading/>}>
-            <BrowserRouter basename="/app">
+            <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" replace/>}></Route>
                     <Route path="/home" element={<Home/>}></Route>
