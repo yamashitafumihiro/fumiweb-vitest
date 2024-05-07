@@ -2,7 +2,7 @@ import './App.css'
 import {Box, LinearProgress, Typography} from "@mui/material";
 import React, {Suspense} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import Home from "./components/Home.tsx";
+import HomePage from "./components/HomePage.tsx";
 
 const Loading: React.FC = () => {
     return (
@@ -19,7 +19,7 @@ const App: React.FC = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" replace/>}></Route>
-                    <Route path="/home" element={<Home/>}></Route>
+                    <Route path="/home" element={<HomePage/>}></Route>
                 </Routes>
             </BrowserRouter>
         </Suspense>

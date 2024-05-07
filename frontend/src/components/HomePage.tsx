@@ -9,7 +9,7 @@ const blogposts = [
 
 const defaultTheme = createTheme();
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline/>
@@ -42,6 +42,6 @@ const Home: React.FC = () => {
             </Container>
         </ThemeProvider>
     );
-}
+};
 
-export default Home;
+export default HomePage;
