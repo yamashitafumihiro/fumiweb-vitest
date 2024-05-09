@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {
     Box,
-    Button,
+    Button, Grid,
     TextField,
     Typography
 } from "@mui/material";
@@ -20,6 +20,8 @@ const blogposts = [
 
 const HomePage: React.FC = () => {
     const postsPerPage = 4;
+    const maxPages = Math.ceil(blogposts.length / postsPerPage);
+    const [inputPage, setInputPage] = useState<null | number>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -30,8 +32,12 @@ const HomePage: React.FC = () => {
     };
 
     const handleNextPage = () => {
-        const maxPages = Math.ceil(blogposts.length / postsPerPage);
         setCurrentPage(prev => Math.min(prev + 1, maxPages));
+    };
+
+    const handleMoveClick = () => {
+        const targetPage = Number(inputPage) ? Math.max(1, Math.min(Number(inputPage), maxPages)) : 1;
+        setCurrentPage(targetPage);
     };
 
     return (
@@ -63,19 +69,28 @@ const HomePage: React.FC = () => {
                         </Box>
                     </Box>
                 ))}
-                <Box marginBottom={4} sx={{display: 'flex', alignItems: 'center'}}>
-                    <Button variant="outlined" size="large" onClick={handlePrevPage}>prev</Button>
-                    <TextField
-                        label="page"
-                        variant="outlined"
-                        type="number"
-                        size="small"
-                        value={currentPage}
-                        onChange={(e) => setCurrentPage(Number(e.target.value))}
-                        sx={{mx: 2}}
-                    />
-                    <Button variant="outlined" size="large" onClick={handleNextPage}>next</Button>
-                </Box>
+                <Grid container alignItems='center' marginBottom={4}>
+                    <Grid item xs={4}>
+                        <Button variant="outlined" size="large" onClick={handlePrevPage}>prev</Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <TextField
+                            label="page"
+                            variant="outlined"
+                            type="number"
+                            size="small"
+                            value={inputPage || ''}
+                            onChange={(e) => setInputPage(Number(e.target.value))}
+                        />
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button variant="outlined" onClick={() => handleMoveClick()}
+                                disabled={!inputPage || inputPage > maxPages}>move</Button>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Button variant="outlined" size="large" onClick={handleNextPage}>next</Button>
+                    </Grid>
+                </Grid>
             </Box>
         </Box>
     );
