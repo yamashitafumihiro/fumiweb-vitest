@@ -5,6 +5,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
+import {useWindowSize} from "../hooks/useWindowSize.tsx";
 
 const blogposts = [
     {id: 1, title: "First Post", imageUrl: "../public/vite.svg"},
@@ -19,6 +20,8 @@ const blogposts = [
 ];
 
 const HomePage: React.FC = () => {
+    const [width, height] = useWindowSize();
+
     const postsPerPage = 4;
     const maxPages = Math.ceil(blogposts.length / postsPerPage);
     const [inputPage, setInputPage] = useState<null | number>(null);
@@ -42,25 +45,23 @@ const HomePage: React.FC = () => {
 
     return (
         <Box sx={{
-            maxWidth: 1200,
             margin: 'auto',
-            width: '100%',
-            height: '100vh',
+            width: width * 0.8,
+            maxWidth: '1000px',
+            height: height,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start'
+            alignItem: 'center'
         }}>
             <Typography variant="h2" sx={{borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3}}>Home</Typography>
-            <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 {currentPostsList.map((post) => (
                     <Box key={post.id}
-                         sx={{width: '150%', border: 1, borderColor: 'grey.300', p: 2, mb: 2}}>
+                         sx={{width: '100%', border: 1, borderColor: 'grey.300', p: 2, mb: 2}}>
                         <Box sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            width: '100%',
-                            height: '100%'
                         }}>
                             <Typography variant="h6">{post.title}</Typography>
                             <Box sx={{width: 100, height: 100, bgcolor: 'grey.200'}}>
@@ -69,8 +70,9 @@ const HomePage: React.FC = () => {
                         </Box>
                     </Box>
                 ))}
-                <Grid container alignItems='center' marginBottom={4}>
-                    <Grid item xs={4}>
+                <Grid container alignItems='center' margin={4}>
+                    <Grid item xs={2}></Grid>
+                    <Grid item xs={2}>
                         <Button variant="outlined" size="large" onClick={handlePrevPage}>prev</Button>
                     </Grid>
                     <Grid item xs={2}>
@@ -87,9 +89,10 @@ const HomePage: React.FC = () => {
                         <Button variant="outlined" onClick={() => handleMoveClick()}
                                 disabled={!inputPage || inputPage > maxPages}>move</Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={2}>
                         <Button variant="outlined" size="large" onClick={handleNextPage}>next</Button>
                     </Grid>
+                    <Grid item xs={2}></Grid>
                 </Grid>
             </Box>
         </Box>
