@@ -3,6 +3,7 @@ import {Box, LinearProgress, Typography} from "@mui/material";
 import React, {Suspense} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage.tsx";
+import Navbar from "./components/Navbar.tsx";
 
 const Loading: React.FC = () => {
     return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
     return (
         <Suspense fallback={<Loading/>}>
             <BrowserRouter>
+                <Navbar/>
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" replace/>}></Route>
                     <Route path="/home" element={<HomePage/>}></Route>
