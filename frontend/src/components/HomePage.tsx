@@ -53,7 +53,8 @@ const HomePage: React.FC = () => {
             flexDirection: 'column',
             alignItem: 'center'
         }}>
-            <Typography variant="h2" sx={{borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3}}>Home</Typography>
+            <Typography marginTop={2} variant="h2"
+                        sx={{borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3}}>Home</Typography>
             <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 {currentPostsList.map((post) => (
                     <Box key={post.id}

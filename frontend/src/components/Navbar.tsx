@@ -1,5 +1,15 @@
 import React from "react";
-import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import {
+    AppBar,
+    Box,
+    Button,
+    Container,
+    IconButton,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from "react-router-dom";
 
@@ -26,10 +36,23 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
+        <AppBar position="static" sx={{width: '100vw'}}>
+            <Container maxWidth={false}>
                 <Toolbar disableGutters>
-                    <Typography>Navbar</Typography>
+                    <Typography variant="h6"
+                                noWrap
+                                component={Link}
+                                to={'/'}
+                                sx={{
+                                    mr: 2,
+                                    display: {xs: 'none', md: 'flex'},
+                                    fontWeight: 700,
+                                    letterSpacing: '.1rem',
+                                    color: 'inherit',
+                                    textDecoration: 'none',
+                                }}>
+                        Navbar
+                    </Typography>
 
                     <Box marginLeft={2} sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
