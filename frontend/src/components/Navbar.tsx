@@ -20,7 +20,7 @@ type Page = {
 
 const pages: Page[] = [
     {
-        key: 'home',
+        key: 'Home',
         href: '/home',
     },
 ];
@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
                         {pages.map((page) => (
                             <Button
                                 key={page.key}
-                                sx={{my: 2, color: 'white', display: 'block'}}
+                                sx={{my: 2, color: 'white', display: 'block', textTransform: "none"}}
                                 component={Link}
                                 to={page.href}
                             >

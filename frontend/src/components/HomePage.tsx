@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import {
     Box,
-    Button, Grid,
+    Button,
+    Grid,
     TextField,
-    Typography
+    Typography,
 } from "@mui/material";
 import {useWindowSize} from "../hooks/useWindowSize.tsx";
+
 
 const blogposts = [
     {id: 1, title: "First Post", imageUrl: "../public/vite.svg"},
@@ -74,7 +76,8 @@ const HomePage: React.FC = () => {
                 <Grid container alignItems='center' margin={4}>
                     <Grid item xs={2}></Grid>
                     <Grid item xs={2}>
-                        <Button variant="outlined" size="large" onClick={handlePrevPage}>prev</Button>
+                        <Button variant="outlined" size="large" onClick={handlePrevPage}
+                                sx={{textTransform: "none"}}>prev</Button>
                     </Grid>
                     <Grid item xs={2}>
                         <TextField
@@ -88,10 +91,11 @@ const HomePage: React.FC = () => {
                     </Grid>
                     <Grid item xs={2}>
                         <Button variant="outlined" onClick={() => handleMoveClick()}
-                                disabled={!inputPage || inputPage > maxPages}>move</Button>
+                                disabled={!inputPage || inputPage > maxPages} sx={{textTransform: "none"}}>move</Button>
                     </Grid>
                     <Grid item xs={2}>
-                        <Button variant="outlined" size="large" onClick={handleNextPage}>next</Button>
+                        <Button variant="outlined" size="large" onClick={handleNextPage} sx={{textTransform: "none"}}>next
+                        </Button>
                     </Grid>
                     <Grid item xs={2}></Grid>
                 </Grid>
