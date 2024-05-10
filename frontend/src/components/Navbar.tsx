@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
                                     color: 'inherit',
                                     textDecoration: 'none',
                                 }}>
-                        Navbar
+                        fumiweb
                     </Typography>
 
                     <Box marginLeft={2} sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
