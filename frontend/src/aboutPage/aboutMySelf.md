@@ -1,1 +1,0 @@
-# Fumihiro Yamashita
