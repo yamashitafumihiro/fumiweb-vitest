@@ -5,6 +5,7 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage.tsx";
 import Navbar from "./components/Navbar.tsx";
 import AboutPage from "./components/About.tsx";
+import TimelinePage from "./components/TimelinePage.tsx";
 
 const Loading: React.FC = () => {
     return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<Navigate to="/home" replace/>}></Route>
                     <Route path="/home" element={<HomePage/>}></Route>
                     <Route path="/about" element={<AboutPage/>}></Route>
+                    <Route path="timeline" element={<TimelinePage/>}></Route>
                 </Routes>
             </BrowserRouter>
         </Suspense>
