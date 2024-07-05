@@ -33,7 +33,8 @@ const PostPage: React.FC = () => {
             height: height,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            textAlign: 'left'
         }}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdownContent}</ReactMarkdown>
         </Box>
