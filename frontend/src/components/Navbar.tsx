@@ -26,6 +26,10 @@ const pages: Page[] = [
     {
         key: 'About',
         href: '/about',
+    },
+    {
+        key: 'Timeline',
+        href: '/Timeline',
     }
 ];
 
