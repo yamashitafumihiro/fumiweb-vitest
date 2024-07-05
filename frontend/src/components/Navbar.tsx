@@ -23,6 +23,10 @@ const pages: Page[] = [
         key: 'Home',
         href: '/home',
     },
+    {
+        key: 'About',
+        href: '/about',
+    }
 ];
 
 const Navbar: React.FC = () => {
