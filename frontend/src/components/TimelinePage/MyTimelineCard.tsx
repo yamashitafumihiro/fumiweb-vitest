@@ -18,6 +18,7 @@ interface TimelineItem {
     title: string;
     description: string;
     duration: string;
+    status: string;
     projectTitle?: string;
     projectUrl?: string;
     tagList?: { id: string; name: string }[];
@@ -28,7 +29,7 @@ interface MyTimelineCardProps {
 }
 
 const MyTimelineCard: React.FC<MyTimelineCardProps> = ({item}) => {
-    const {projectTitle, description, duration, tagList} = item;
+    const {projectTitle, description, duration, status, tagList} = item;
     return (
         <ProjectContainer>
             <TopContainer>
@@ -38,6 +39,7 @@ const MyTimelineCard: React.FC<MyTimelineCardProps> = ({item}) => {
                     <Duration>{duration}</Duration>
                 </IconContainer>
             </TopContainer>
+            <>{status}</>
             <Description>{description}</Description>
             <TagList>
                 {tagList?.map(eachValue => (
