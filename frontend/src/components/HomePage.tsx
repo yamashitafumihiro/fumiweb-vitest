@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 
 
 const blogposts = [
-    {id: 1, title: "", imageUrl: "../public/images/technology.png", slug: "initPost"},
+    {id: 1, title: "テストポスト", imageUrl: "../public/images/technology.png", slug: "initPost"},
 ];
 
 const HomePage: React.FC = () => {
