@@ -7,18 +7,11 @@ import {
     Typography,
 } from "@mui/material";
 import {useWindowSize} from "../hooks/useWindowSize.tsx";
+import {Link} from "react-router-dom";
 
 
 const blogposts = [
-    {id: 1, title: "First Post", imageUrl: "../public/vite.svg"},
-    {id: 2, title: "Second Post", imageUrl: "../public/vite.svg"},
-    {id: 3, title: "Third Post", imageUrl: "../public/vite.svg"},
-    {id: 4, title: "Fourth Post", imageUrl: "../public/vite.svg"},
-    {id: 5, title: "Fifth Post", imageUrl: "../public/vite.svg"},
-    {id: 6, title: "Sixth Post", imageUrl: "../public/vite.svg"},
-    {id: 7, title: "Seventh Post", imageUrl: "../public/vite.svg"},
-    {id: 8, title: "Eighth Post", imageUrl: "../public/vite.svg"},
-    {id: 9, title: "Ninth Post", imageUrl: "../public/vite.svg"},
+    {id: 1, title: "テストポスト", imageUrl: "../public/images/technology.png", slug: "initPost"},
 ];
 
 const HomePage: React.FC = () => {
@@ -61,16 +54,18 @@ const HomePage: React.FC = () => {
                 {currentPostsList.map((post) => (
                     <Box key={post.id}
                          sx={{width: '100%', border: 1, borderColor: 'grey.300', p: 2, mb: 2}}>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}>
-                            <Typography variant="h6">{post.title}</Typography>
-                            <Box sx={{width: 100, height: 100, bgcolor: 'grey.200'}}>
-                                <img src={post.imageUrl} alt={post.title} style={{width: '100%', height: '100%'}}/>
+                        <Link to={`../post/${post.slug}`} style={{textDecoration: 'none', color: 'inherit'}}>
+                            <Box sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}>
+                                <Typography variant="h6">{post.title}</Typography>
+                                <Box sx={{width: 100, height: 100, bgcolor: 'grey.200'}}>
+                                    <img src={post.imageUrl} alt={post.title} style={{width: '100%', height: '100%'}}/>
+                                </Box>
                             </Box>
-                        </Box>
+                        </Link>
                     </Box>
                 ))}
                 <Grid container alignItems='center' margin={4}>
