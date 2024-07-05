@@ -5,7 +5,7 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage.tsx";
 import Navbar from "./components/Navbar.tsx";
 import AboutPage from "./components/About.tsx";
-import TimelinePage from "./components/TimelinePage.tsx";
+import TimelinePage from "./components/TimelinePage/TimelinePage.tsx";
 
 const Loading: React.FC = () => {
     return (
