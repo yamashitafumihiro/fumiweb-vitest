@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {
     Box,
     Button,
-    Grid,
+    Grid, Stack,
     TextField,
     Typography,
 } from "@mui/material";
@@ -11,7 +11,13 @@ import {Link} from "react-router-dom";
 
 
 const blogposts = [
-    {id: 1, title: "テストポスト", imageUrl: "../public/images/technology.png", slug: "initPost"},
+    {
+        id: 1,
+        title: "いにしゃるぽすと",
+        imageUrl: "../public/images/technology.png",
+        slug: "initPost",
+        date: "2024/07/05"
+    },
 ];
 
 const HomePage: React.FC = () => {
@@ -49,7 +55,7 @@ const HomePage: React.FC = () => {
             alignItem: 'center'
         }}>
             <Typography marginTop={2} variant="h2"
-                        sx={{borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3}}>Home</Typography>
+                        sx={{borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3}}>fumiweb</Typography>
             <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 {currentPostsList.map((post) => (
                     <Box key={post.id}
@@ -60,7 +66,11 @@ const HomePage: React.FC = () => {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                                <Typography variant="h6">{post.title}</Typography>
+                                <Stack>
+                                    <Typography variant="h5">{post.title}</Typography>
+                                    <Typography variant="body2"
+                                                sx={{marginTop: 1, color: 'grey.500'}}>{post.date}</Typography>
+                                </Stack>
                                 <Box sx={{width: 100, height: 100, bgcolor: 'grey.200'}}>
                                     <img src={post.imageUrl} alt={post.title} style={{width: '100%', height: '100%'}}/>
                                 </Box>
