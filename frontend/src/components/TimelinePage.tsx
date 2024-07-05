@@ -30,16 +30,16 @@ const data = [
 const TimelinePage: React.FC = () => {
     const [width, height] = useWindowSize();
     return (
-        <Box sx={{
-            margin: 'auto',
-            width: width * 0.8,
-            maxWidth: '1000px',
-            height: height,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItem: 'center'
-        }}>
-            <Chrono items={data} disableToolbar={true} mode="VERTICAL_ALTERNATING"/>
+        <Box>
+            <Chrono items={data} disableToolbar={true} mode="VERTICAL_ALTERNATING" sx={{
+                margin: 'auto',
+                width: width * 0.6,
+                maxWidth: '1000px',
+                height: height,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItem: 'center'
+            }}/>
         </Box>
     );
 }
