@@ -61,7 +61,13 @@ const PostPage: React.FC = () => {
         ),
         p: ({...props}) => (
             <p style={{textAlign: 'left'}} {...props} />
-        )
+        ),
+        ul: ({...props}) => (
+            <ul style={{textAlign: 'left'}} {...props} />
+        ),
+        li: ({...props}) => (
+            <li style={{textAlign: 'left'}} {...props} />
+        ),
     };
 
     const card = (
