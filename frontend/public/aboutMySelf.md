@@ -14,7 +14,7 @@
 
 ## 興味
 
-#### IaC, AWS, GCP
+#### IaC, AWS, GCP, CI/CD
 
 ## 受賞歴
 
