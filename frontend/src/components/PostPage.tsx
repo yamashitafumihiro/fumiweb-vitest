@@ -2,12 +2,17 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import ReactMarkdown, {Components} from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import {Box} from '@mui/material';
+import {Box, Card, CardContent, Typography} from '@mui/material';
 import {useWindowSize} from '../hooks/useWindowSize.tsx';
+import {blogposts} from "./HomePage.tsx";
+import remarkParse from "remark-parse";
+import {unified} from 'unified';
+import {visit} from "unist-util-visit";
 
 const PostPage: React.FC = () => {
     const {postId} = useParams<{ postId: string }>();
     const [markdownContent, setMarkdownContent] = useState("");
+    const [headings, setHeadings] = useState<{ level: number, text: string } []>([]);
     const [width, height] = useWindowSize();
 
     useEffect(() => {
@@ -18,12 +23,34 @@ const PostPage: React.FC = () => {
                 }
                 return response.text();
             })
-            .then(text => setMarkdownContent(text))
+            .then(text => {
+                setMarkdownContent(text);
+                extractHeadings(text);
+            })
             .catch(error => {
                 console.error('Error fetching markdown file:', error);
                 setMarkdownContent("# Post not found");
             });
     }, [postId]);
+
+    const post = blogposts.find(post => post.slug === postId)
+
+    const extractHeadings = (markdown: string) => {
+        const tree = unified().use(remarkParse).parse(markdown);
+        const newHeadings: { level: number, text: string }[] = [];
+
+        visit(tree, 'heading', (node) => {
+            if (node.type === 'heading') {
+                const text = node.children
+                    .filter((child): child is { type: 'text'; value: string } => child.type === 'text')
+                    .map((child) => child.value)
+                    .join('');
+                newHeadings.push({level: node.depth, text});
+            }
+        });
+
+        setHeadings(newHeadings);
+    };
 
     const components: Components = {
         h1: ({...props}) => (
@@ -37,15 +64,34 @@ const PostPage: React.FC = () => {
         )
     };
 
+    const card = (
+        <React.Fragment>
+            <CardContent sx={{backgroundColor: '#f0f0f0', textAlign: 'left'}}>
+                <Typography sx={{fontSize: 14}} color="text.secondary">
+                    目次
+                </Typography>
+                <ul>
+                    {headings.map((heading, index) => (
+                        <li key={index}>
+                            {heading.text}
+                        </li>
+                    ))}
+                </ul>
+            </CardContent>
+        </React.Fragment>
+    );
+
     return (
         <Box sx={{
             margin: 'auto',
             width: width * 0.8,
             maxWidth: '1000px',
             height: height,
-            display: 'flex',
-            flexDirection: 'column',
+            alignItems: 'center',
         }}>
+            <Typography variant="h2" marginTop={4} marginBottom={2}>{post?.title}</Typography>
+            <Card variant="outlined"
+                  sx={{marginX: width * 0.01}}>{card}</Card>
             <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>{markdownContent}</ReactMarkdown>
         </Box>
     );

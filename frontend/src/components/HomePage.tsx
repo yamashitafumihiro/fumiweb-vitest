@@ -9,8 +9,7 @@ import {
 import {useWindowSize} from "../hooks/useWindowSize.tsx";
 import {Link} from "react-router-dom";
 
-
-const blogposts = [
+export const blogposts = [
     {
         id: 1,
         title: "いにしゃるぽすと",
