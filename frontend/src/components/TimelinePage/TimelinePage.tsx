@@ -46,7 +46,7 @@ const data: TimelineItem[] = [
         id: "1",
         title: "2023年8月",
         description: "データサイエンティストとしてプロダクトのROI可視化に取り組みました。データ分析に関する実務経験は初めてだったので良い経験となりました。一方で、これ以降分析基盤の方に興味を持つようになりました。",
-        duration: "1週間",
+        duration: "2週間",
         status: "インターン",
         projectTitle: "M3 inc.",
         tagList: [
@@ -77,8 +77,9 @@ const data: TimelineItem[] = [
         status: "インターン",
         projectTitle: "(株)日立製作所",
         tagList: [
-            {id: "1", name: "AWS"},
+            {id: "1", name: "AWS CDK"},
             {id: "2", name: "ShellScript"},
+            {id: "3", name: "ネットワーク"}
         ],
     },
 ];
