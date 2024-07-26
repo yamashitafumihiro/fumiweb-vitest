@@ -13,7 +13,7 @@ const PostPage: React.FC = () => {
     const {postId} = useParams<{ postId: string }>();
     const [markdownContent, setMarkdownContent] = useState("");
     const [headings, setHeadings] = useState<{ level: number, text: string } []>([]);
-    const [width, height] = useWindowSize();
+    const [width] = useWindowSize();
 
     useEffect(() => {
         fetch(`/posts/${postId}.md`)
@@ -89,10 +89,10 @@ const PostPage: React.FC = () => {
 
     return (
         <Box sx={{
-            margin: 'auto',
+            marginX: 'auto',
             width: width * 0.8,
             maxWidth: '1000px',
-            height: height,
+            paddingBottom: 4,
             alignItems: 'center',
         }}>
             <Typography variant="h2" marginTop={4} marginBottom={2}>{post?.title}</Typography>

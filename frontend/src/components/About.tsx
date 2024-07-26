@@ -9,7 +9,7 @@ import {faGithubSquare} from '@fortawesome/free-brands-svg-icons'
 
 const AboutPage: React.FC = () => {
     const [markdownContent, setMarkdownContent] = useState("");
-    const [width, height] = useWindowSize();
+    const [width] = useWindowSize();
 
     useEffect(() => {
         fetch("/aboutMySelf.md")
@@ -19,12 +19,10 @@ const AboutPage: React.FC = () => {
 
     return (
         <Box sx={{
-            margin: 'auto',
+            marginX: 'auto',
             width: width * 0.8,
             maxWidth: '1000px',
-            height: height,
-            display: 'flex',
-            flexDirection: 'column',
+            paddingBottom: 4,
             alignItem: 'center'
         }}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdownContent}</ReactMarkdown>

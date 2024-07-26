@@ -20,7 +20,7 @@ export const blogposts = [
 ];
 
 const HomePage: React.FC = () => {
-    const [width, height] = useWindowSize();
+    const [width] = useWindowSize();
 
     const postsPerPage = 4;
     const maxPages = Math.ceil(blogposts.length / postsPerPage);
@@ -45,13 +45,13 @@ const HomePage: React.FC = () => {
 
     return (
         <Box sx={{
-            margin: 'auto',
+            marginX: 'auto',
             width: width * 0.8,
             maxWidth: '1000px',
-            height: height,
             display: 'flex',
             flexDirection: 'column',
-            alignItem: 'center'
+            alignItem: 'center',
+            paddingBottom: 4
         }}>
             <Typography marginTop={2} variant="h2"
                         sx={{borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3}}>fumiweb</Typography>

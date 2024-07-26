@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <AppBar position="static" sx={{width: '100vw'}}>
+        <AppBar position="static" sx={{width: '100vw', marginTop: 0}}>
             <Container maxWidth={false}>
                 <Toolbar disableGutters>
                     <Typography variant="h6"

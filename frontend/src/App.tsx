@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar.tsx";
 import AboutPage from "./components/About.tsx";
 import TimelinePage from "./components/TimelinePage/TimelinePage.tsx";
 import PostPage from "./components/PostPage.tsx";
+import Footer from "./components/Footer.tsx";
 
 const Loading: React.FC = () => {
     return (
@@ -20,16 +21,19 @@ const Loading: React.FC = () => {
 const App: React.FC = () => {
     return (
         <Suspense fallback={<Loading/>}>
-            <BrowserRouter>
-                <Navbar/>
-                <Routes>
-                    <Route path="/" element={<Navigate to="/home" replace/>}></Route>
-                    <Route path="/home" element={<HomePage/>}></Route>
-                    <Route path="post/:postId" element={<PostPage/>}></Route>
-                    <Route path="/about" element={<AboutPage/>}></Route>
-                    <Route path="timeline" element={<TimelinePage/>}></Route>
-                </Routes>
-            </BrowserRouter>
+            <Box sx={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+                <BrowserRouter>
+                    <Navbar/>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/home" replace/>}></Route>
+                        <Route path="/home" element={<HomePage/>}></Route>
+                        <Route path="post/:postId" element={<PostPage/>}></Route>
+                        <Route path="/about" element={<AboutPage/>}></Route>
+                        <Route path="timeline" element={<TimelinePage/>}></Route>
+                    </Routes>
+                    <Footer/>
+                </BrowserRouter>
+            </Box>
         </Suspense>
     )
 }

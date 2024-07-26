@@ -2,14 +2,13 @@ import React from "react";
 import {Chrono} from "react-chrono";
 import styled from 'styled-components'
 import MyTimelineCard from "./MyTimelineCard.tsx";
+import {Box} from "@mui/material";
 
 const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    min-height: 100vh;
-    max-height: 100%;
 `
 const MyJourney = styled.h1`
     color: #1e293b;
@@ -110,7 +109,14 @@ const TimelineView: React.FC<TimelineViewProps> = ({timelineItemsList}) => {
 
 const TimelinePage: React.FC = () => {
     return (
-        <TimelineView timelineItemsList={data}/>
+        <Box sx={{
+            marginX: 'auto',
+            maxWidth: '1000px',
+            paddingBottom: 4,
+            alignItems: 'center',
+        }}>
+            <TimelineView timelineItemsList={data}/>
+        </Box>
     );
 };
 
