@@ -13,7 +13,7 @@ export const blogposts = [
     {
         id: 1,
         title: "いにしゃるぽすと",
-        imageUrl: "../public/images/technology.png",
+        imageUrl: "/images/technology.png",
         slug: "initPost",
         date: "2024/07/05"
     },
