@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 export const blogposts = [
     {
         id: 1,
-        title: "いにしゃるぽすと",
+        title: "init post",
         imageUrl: "/images/technology.png",
         slug: "initPost",
         date: "2024/07/05"
