@@ -74,31 +74,15 @@ button:focus-visible {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        color: #213547 !important;
-        background-color: #ffffff !important;
-    }
-
-    body {
-        color: #213547 !important;
-        background-color: #ffffff !important;
+        color: #213547;
+        background-color: #ffffff;
     }
 
     a:hover {
-        color: #747bff !important;
+        color: #747bff;
     }
 
     button {
-        background-color: #f9f9f9 !important;
-    }
-
-    /* MUIコンポーネントの色を上書き（必要に応じて） */
-    .MuiPaper-root {
-        background-color: #ffffff !important;
-        color: #213547 !important;
-    }
-
-    .MuiAppBar-root {
-        background-color: #1976d2 !important;
-        color: #ffffff !important;
+        background-color: #f9f9f9;
     }
 }
