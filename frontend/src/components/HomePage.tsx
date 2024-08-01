@@ -73,10 +73,16 @@ const HomePage: React.FC = () => {
                 <Grid container alignItems='center'>
                     <Grid item xs={6}>
                         <Button variant="outlined" size="large" onClick={handlePrevPage}
-                                sx={{textTransform: "none"}}>prev</Button>
+                                disabled={blogposts.length <= 4}
+                                sx={{textTransform: "none"}}>
+                            prev
+                        </Button>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant="outlined" size="large" onClick={handleNextPage} sx={{textTransform: "none"}}>next
+                        <Button variant="outlined" size="large" onClick={handleNextPage}
+                                disabled={blogposts.length <= 4}
+                                sx={{textTransform: "none"}}>
+                            next
                         </Button>
                     </Grid>
                 </Grid>
