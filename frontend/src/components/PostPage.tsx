@@ -8,6 +8,7 @@ import {blogposts} from "./HomePage.tsx";
 import remarkParse from "remark-parse";
 import {unified} from 'unified';
 import {visit} from "unist-util-visit";
+import rehypeRaw from "rehype-raw";
 
 const PostPage: React.FC = () => {
     const {postId} = useParams<{ postId: string }>();
@@ -68,6 +69,9 @@ const PostPage: React.FC = () => {
         li: ({...props}) => (
             <li style={{textAlign: 'left'}} {...props} />
         ),
+        img: ({node, ...props}) => (
+            <img style={{maxWidth: '100%', height: 'auto'}} {...props} alt={props.alt || ''}/>
+        ),
     };
 
     const card = (
@@ -98,7 +102,8 @@ const PostPage: React.FC = () => {
             <Typography variant="h2" marginTop={4} marginBottom={2}>{post?.title}</Typography>
             <Card variant="outlined"
                   sx={{marginX: width * 0.01}}>{card}</Card>
-            <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>{markdownContent}</ReactMarkdown>
+            <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}
+                           rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
         </Box>
     );
 }
