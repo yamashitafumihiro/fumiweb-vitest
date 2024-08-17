@@ -16,6 +16,13 @@ export const blogposts = [
         slug: "initPost",
         date: "2024/07/05"
     },
+    {
+        id: 2,
+        title: "このサイトの構成",
+        imageUrl: "/images/technology.png",
+        slug: "composition",
+        date: "2024/08/17"
+    }
 ];
 
 const HomePage: React.FC = () => {
