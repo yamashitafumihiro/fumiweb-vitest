@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                                <Stack>
+                                <Stack alignItems="flex-start">
                                     <Typography variant="h5">{post.title}</Typography>
                                     <Typography variant="body2"
                                                 sx={{marginTop: 1, color: 'grey.500'}}>{post.date}</Typography>
