@@ -1,9 +1,21 @@
 import React, {useEffect, useState} from "react";
-import axios from 'axios';
 
 interface LikeButtonProps {
     postId: number | undefined;
 }
+
+const mockApi = {
+    get: async (postId: number): Promise<{ likes: number }> => {
+        const likes = localStorage.getItem(`likes_${postId}`);
+        return {likes: likes ? parseInt(likes, 10) : 0};
+    },
+    post: async (postId: number, action: 'like' | 'unlike'): Promise<{ likes: number }> => {
+        const currentLikes = await mockApi.get(postId);
+        const newLikes = action === 'like' ? currentLikes.likes + 1 : Math.max(currentLikes.likes - 1, 0);
+        localStorage.setItem(`likes_${postId}`, newLikes.toString());
+        return {likes: newLikes};
+    }
+};
 
 const LikeButton: React.FC<LikeButtonProps> = ({postId}) => {
     const [likes, setLikes] = useState<number>(0);
@@ -16,33 +28,32 @@ const LikeButton: React.FC<LikeButtonProps> = ({postId}) => {
     }, [postId]);
 
     const fetchLikes = async () => {
+        if (postId === undefined) return;
         try {
-            const response = await axios.get<{ likes: number }>(`/api/likes/${postId}`);
-            setLikes(response.data.likes);
+            const response = await mockApi.get(postId);
+            setLikes(response.likes);
         } catch (error) {
             console.error('Error fetching likes: error');
         }
     };
 
     const handleLike = async (): Promise<void> => {
-        if (isLiked) {
-            try {
-                await axios.post(`/api/likes/${postId}/unlike`);
-                setLikes(likes - 1);
+        if (postId === undefined) return;
+
+        try {
+            if (isLiked) {
+                const response = await mockApi.post(postId, 'unlike');
+                setLikes(response.likes);
                 setIsLiked(false);
                 localStorage.removeItem(`liked_${postId}`);
-            } catch (error) {
-                console.error('Error unliking post:', error);
-            }
-        } else {
-            try {
-                await axios.post(`/api/likes/${postId}/like`);
-                setLikes(likes + 1);
+            } else {
+                const response = await mockApi.post(postId, 'like');
+                setLikes(response.likes);
                 setIsLiked(true);
                 localStorage.setItem(`liked_${postId}`, 'true');
-            } catch (error) {
-                console.error('Error liking post:', error);
             }
+        } catch (error) {
+            console.error('Error updating like status:', error);
         }
     };
 
