@@ -9,32 +9,35 @@ import remarkParse from "remark-parse";
 import {unified} from 'unified';
 import {visit} from "unist-util-visit";
 import rehypeRaw from "rehype-raw";
+import LikeButton from "./LikeButton.tsx";
 
 const PostPage: React.FC = () => {
-    const {postId} = useParams<{ postId: string }>();
+    const {slug} = useParams<{ slug: string }>();
     const [markdownContent, setMarkdownContent] = useState("");
     const [headings, setHeadings] = useState<{ level: number, text: string } []>([]);
     const [width] = useWindowSize();
 
     useEffect(() => {
-        fetch(`/posts/${postId}.md`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(text => {
-                setMarkdownContent(text);
-                extractHeadings(text);
-            })
-            .catch(error => {
-                console.error('Error fetching markdown file:', error);
-                setMarkdownContent("# Post not found");
-            });
-    }, [postId]);
+        if (slug) {
+            fetch(`/posts/${slug}.md`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    setMarkdownContent(text);
+                    extractHeadings(text);
+                })
+                .catch(error => {
+                    console.error('Error fetching markdown file:', error);
+                    setMarkdownContent("# Post not found");
+                });
+        }
+    }, [slug]);
 
-    const post = blogposts.find(post => post.slug === postId)
+    const post = blogposts.find(post => post.slug === slug)
 
     const extractHeadings = (markdown: string) => {
         const tree = unified().use(remarkParse).parse(markdown);
@@ -99,11 +102,17 @@ const PostPage: React.FC = () => {
             paddingBottom: 4,
             alignItems: 'center',
         }}>
-            <Typography variant="h2" marginTop={4} marginBottom={2}>{post?.title}</Typography>
-            <Card variant="outlined"
-                  sx={{marginX: width * 0.01}}>{card}</Card>
-            <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}
-                           rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
+            {post ? (
+                <>
+                    <Typography variant="h2" marginTop={4} marginBottom={2}>{post.title}</Typography>
+                    <Card variant="outlined" sx={{marginX: width * 0.01}}>{card}</Card>
+                    <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}
+                                   rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
+                    <LikeButton postId={post.id}/>
+                </>
+            ) : (
+                <Typography variant="h2" marginTop={4} marginBottom={2}>Post not found</Typography>
+            )}
         </Box>
     );
 }

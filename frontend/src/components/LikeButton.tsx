@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from 'axios';
 
 interface LikeButtonProps {
-    postId: string;
+    postId: number | undefined;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({postId}) => {
