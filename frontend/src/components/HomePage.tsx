@@ -28,12 +28,13 @@ export const blogposts = [
 const HomePage: React.FC = () => {
     const [width] = useWindowSize();
 
+    const reversedBlogPosts = [...blogposts].reverse();
     const postsPerPage = 4;
     const maxPages = Math.ceil(blogposts.length / postsPerPage);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPostsList = blogposts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPostsList = reversedBlogPosts.slice(indexOfFirstPost, indexOfLastPost);
 
     const handlePrevPage = () => {
         setCurrentPage(prev => Math.max(prev - 1, 1));
