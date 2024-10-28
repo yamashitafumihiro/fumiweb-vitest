@@ -1,0 +1,5 @@
+#!/bin/sh
+set -euo pipefail
+
+# Lambdaの実行環境で main バイナリを実行
+/var/task/main
