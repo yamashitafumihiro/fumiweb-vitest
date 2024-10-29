@@ -35,3 +35,4 @@ build/
 *node_modules/
 frontend/.env
 *.bin
+frontend/src/api/
