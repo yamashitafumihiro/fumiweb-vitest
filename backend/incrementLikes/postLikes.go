@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-sdk-go/aws"
@@ -10,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-func increment(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func post(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("ap-northeast-1"),
 	}))
@@ -18,6 +19,20 @@ func increment(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	svc := dynamodb.New(sess)
 
 	postID := request.QueryStringParameters["post_id"]
+	action := request.QueryStringParameters["action"]
+
+	var delta int
+	switch action {
+	case "inc":
+		delta = 1
+	case "dec":
+		delta = -1
+	default:
+		return events.APIGatewayProxyResponse{
+			StatusCode: 400,
+			Body:       "Invalid action parameter",
+		}, nil
+	}
 
 	input := &dynamodb.UpdateItemInput{
 		TableName: aws.String("likes"),
@@ -26,9 +41,9 @@ func increment(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 				S: aws.String(postID),
 			},
 		},
-		UpdateExpression: aws.String("SET likes = if_not_exists(likes, :start) + :inc"),
+		UpdateExpression: aws.String("SET likes = if_not_exists(likes, :start) + :delta"),
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":inc":   {N: aws.String("1")},
+			":delta": {N: aws.String(strconv.Itoa(delta))},
 			":start": {N: aws.String("0")},
 		},
 		ReturnValues: aws.String("UPDATED_NEW"),

@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	lambda.Start(increment)
+	lambda.Start(post)
 }
