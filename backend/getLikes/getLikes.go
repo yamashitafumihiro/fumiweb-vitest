@@ -9,14 +9,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/yamashitafumihiro/likes/common"
 )
 
-type LikeData struct {
-	PostID string `json:"post_id"`
-	Likes  int    `json:"likes"`
-}
-
-func Get(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func get(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("ap-northeast-1"),
 	}))
@@ -42,7 +38,7 @@ func Get(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 		}, nil
 	}
 
-	var likeData LikeData
+	var likeData common.LikeData
 	if err := dynamodbattribute.UnmarshalMap(result.Item, &likeData); err != nil {
 		return events.APIGatewayProxyResponse{
 			StatusCode: 500,

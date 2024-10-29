@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	lambda.Start(Get)
+	lambda.Start(get)
 }
