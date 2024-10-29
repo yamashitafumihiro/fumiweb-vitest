@@ -1,4 +1,4 @@
-package lambdaFunctions
+package main
 
 import (
 	"encoding/json"
