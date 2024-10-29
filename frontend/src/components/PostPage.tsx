@@ -9,15 +9,23 @@ import remarkParse from "remark-parse";
 import {unified} from 'unified';
 import {visit} from "unist-util-visit";
 import rehypeRaw from "rehype-raw";
+import LikesButton from './LikesButton.tsx';
 
 const PostPage: React.FC = () => {
-    const {postId} = useParams<{ postId: string }>();
+    const {postId:slug} = useParams<{ postId: string }>();
     const [markdownContent, setMarkdownContent] = useState("");
     const [headings, setHeadings] = useState<{ level: number, text: string } []>([]);
     const [width] = useWindowSize();
 
+    const post = blogposts.find(post => post.slug === slug);
+    const post_id = post?.id.toString();
+
+    if (!slug || !post) {
+        return <div>Page not found</div>;
+    }
+
     useEffect(() => {
-        fetch(`/posts/${postId}.md`)
+        fetch(`/posts/${slug}.md`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -32,9 +40,7 @@ const PostPage: React.FC = () => {
                 console.error('Error fetching markdown file:', error);
                 setMarkdownContent("# Post not found");
             });
-    }, [postId]);
-
-    const post = blogposts.find(post => post.slug === postId)
+    }, [slug]);
 
     const extractHeadings = (markdown: string) => {
         const tree = unified().use(remarkParse).parse(markdown);
@@ -104,6 +110,7 @@ const PostPage: React.FC = () => {
                   sx={{marginX: width * 0.01}}>{card}</Card>
             <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}
                            rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
+            {post_id && <LikesButton postId={post_id} />}
         </Box>
     );
 }
