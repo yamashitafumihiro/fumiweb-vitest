@@ -22,6 +22,13 @@ export const blogposts = [
         imageUrl: "/images/technology.png",
         slug: "composition",
         date: "2024/08/17"
+    },
+    {
+        id: 3,
+        title: "今夏の振り返りといいねボタンを実装した話",
+        imageUrl: "/images/technology.png",
+        slug: "likesButton",
+        date: "2024/10/29"
     }
 ];
 
