@@ -11,7 +11,7 @@ const fetchLikes = async (postId: string): Promise<LikeData> => {
       params: { post_id: postId },
     });
     return response.data;
-  };
+};
   
 export const useLikes = (postId: string) => {
     const { data, error, isLoading } = useQuery<LikeData, Error>({
@@ -26,4 +26,4 @@ export const useLikes = (postId: string) => {
       error,
       isLoading,
     };
-  };
+};
