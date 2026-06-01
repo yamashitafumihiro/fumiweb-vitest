@@ -80,12 +80,12 @@ const HomePage: React.FC = () => {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                                <Stack alignItems="flex-start">
-                                    <Typography variant="h5">{post.title}</Typography>
+                                <Stack alignItems="flex-start" sx={{ overflow: 'hidden', minWidth: '0', flex: '1', mr: 2 }}>
+                                    <Typography noWrap component='p' variant="h5" sx={{ width: '100%' }}>{post.title}</Typography>
                                     <Typography variant="body2"
                                         sx={{ marginTop: 1, color: 'grey.500' }}>{post.date}</Typography>
                                 </Stack>
-                                <Box sx={{ width: 100, height: 100, bgcolor: 'grey.200' }}>
+                                <Box sx={{ flexShrink: 0, width: 100, height: 100, bgcolor: 'grey.200' }}>
                                     <img src={post.imageUrl} alt={post.title} style={{ width: '100%', height: '100%' }} />
                                 </Box>
                             </Box>
