@@ -35,3 +35,5 @@ build/
 *node_modules/
 frontend/.env
 *.bin
+# 自動生成 (scripts/generatePostsIndex.mjs)
+frontend/src/generated/

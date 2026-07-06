@@ -1,3 +1,9 @@
+---
+title: "init post"
+date: 2024-07-05
+image: /images/technology.png
+---
+
 ## モチベーション
 
 &emsp;1年後には正社員として働き始めて3か月経過しているみたいなのですが、
