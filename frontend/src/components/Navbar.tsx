@@ -29,7 +29,7 @@ const pages: Page[] = [
     },
     {
         key: 'Timeline',
-        href: '/Timeline',
+        href: '/timeline',
     }
 ];
 
