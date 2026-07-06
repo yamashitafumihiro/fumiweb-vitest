@@ -11,18 +11,7 @@ import {
     ListPara,
     ListItem
 } from './StyledComponents'
-
-
-interface TimelineItem {
-    id: string;
-    title: string;
-    description: string;
-    duration: string;
-    status: string;
-    projectTitle?: string;
-    projectUrl?: string;
-    tagList?: { id: string; name: string }[];
-}
+import {TimelineItem} from "../../data/career.ts";
 
 interface MyTimelineCardProps {
     item: TimelineItem;

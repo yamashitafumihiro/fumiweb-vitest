@@ -2,11 +2,11 @@ import './App.css'
 import {Box, createTheme, LinearProgress, ThemeProvider, Typography} from "@mui/material";
 import React, {Suspense} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import HomePage from "./components/HomePage.tsx";
+import HomePage from "./pages/HomePage.tsx";
 import Navbar from "./components/Navbar.tsx";
-import AboutPage from "./components/About.tsx";
-import TimelinePage from "./components/TimelinePage/TimelinePage.tsx";
-import PostPage from "./components/PostPage.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
+import TimelinePage from "./pages/TimelinePage.tsx";
+import PostPage from "./pages/PostPage.tsx";
 import Footer from "./components/Footer.tsx";
 
 const Loading: React.FC = () => {
@@ -34,9 +34,9 @@ const App: React.FC = () => {
                         <Routes>
                             <Route path="/" element={<Navigate to="/home" replace/>}></Route>
                             <Route path="/home" element={<HomePage/>}></Route>
-                            <Route path="post/:postId" element={<PostPage/>}></Route>
+                            <Route path="/post/:slug" element={<PostPage/>}></Route>
                             <Route path="/about" element={<AboutPage/>}></Route>
-                            <Route path="timeline" element={<TimelinePage/>}></Route>
+                            <Route path="/timeline" element={<TimelinePage/>}></Route>
                         </Routes>
                         <Footer/>
                     </BrowserRouter>

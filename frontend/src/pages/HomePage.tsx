@@ -7,48 +7,19 @@ import {
 } from "@mui/material";
 import { useWindowSize } from "../hooks/useWindowSize.tsx";
 import { Link } from "react-router-dom";
-
-export const blogposts = [
-    {
-        id: 1,
-        title: "init post",
-        imageUrl: "/images/technology.png",
-        slug: "initPost",
-        date: "2024/07/05"
-    },
-    {
-        id: 2,
-        title: "このサイトの構成",
-        imageUrl: "/images/technology.png",
-        slug: "composition",
-        date: "2024/08/17"
-    },
-    {
-        id: 3,
-        title: "今夏の振り返りといいねボタンを実装した話",
-        imageUrl: "/images/technology.png",
-        slug: "createLikesButton",
-        date: "2024/10/29"
-    },
-    {
-        id: 4,
-        title: "2025年のジュビロ磐田について",
-        imageUrl: "/images/soccer_animal_neko.png",
-        slug: "2025jubilo",
-        date: "2025/2/17"
-    }
-];
+import { posts } from "../generated/postsIndex.ts";
+import { formatDate } from "../lib/posts.ts";
 
 const HomePage: React.FC = () => {
     const [width] = useWindowSize();
 
-    const reversedBlogPosts = [...blogposts].reverse();
+    // posts は生成時点で新しい順にソート済み
     const postsPerPage = 4;
-    const maxPages = Math.ceil(blogposts.length / postsPerPage);
+    const maxPages = Math.ceil(posts.length / postsPerPage);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPostsList = reversedBlogPosts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPostsList = posts.slice(indexOfFirstPost, indexOfLastPost);
 
     const handlePrevPage = () => {
         setCurrentPage(prev => Math.max(prev - 1, 1));
@@ -72,7 +43,7 @@ const HomePage: React.FC = () => {
                 sx={{ borderBottom: 1, borderColor: 'grey.300', pb: 1, mb: 3 }}>fumiweb</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {currentPostsList.map((post) => (
-                    <Box key={post.id}
+                    <Box key={post.slug}
                         sx={{ width: '100%', border: 1, borderColor: 'grey.300', p: 2, mb: 2 }}>
                         <Link to={`../post/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <Box sx={{
@@ -83,10 +54,10 @@ const HomePage: React.FC = () => {
                                 <Stack alignItems="flex-start" sx={{ overflow: 'hidden', minWidth: '0', flex: '1', mr: 2 }}>
                                     <Typography noWrap component='p' variant="h5" sx={{ width: '100%' }}>{post.title}</Typography>
                                     <Typography variant="body2"
-                                        sx={{ marginTop: 1, color: 'grey.500' }}>{post.date}</Typography>
+                                        sx={{ marginTop: 1, color: 'grey.500' }}>{formatDate(post.date)}</Typography>
                                 </Stack>
                                 <Box sx={{ flexShrink: 0, width: 100, height: 100, bgcolor: 'grey.200' }}>
-                                    <img src={post.imageUrl} alt={post.title} style={{ width: '100%', height: '100%' }} />
+                                    <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%' }} />
                                 </Box>
                             </Box>
                         </Link>
@@ -95,14 +66,14 @@ const HomePage: React.FC = () => {
                 <Grid container alignItems='center'>
                     <Grid item xs={6}>
                         <Button variant="outlined" size="large" onClick={handlePrevPage}
-                            disabled={blogposts.length <= 4}
+                            disabled={currentPage <= 1}
                             sx={{ textTransform: "none" }}>
                             prev
                         </Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant="outlined" size="large" onClick={handleNextPage}
-                            disabled={blogposts.length <= 4}
+                            disabled={currentPage >= maxPages}
                             sx={{ textTransform: "none" }}>
                             next
                         </Button>

@@ -4,27 +4,41 @@ import ReactMarkdown, {Components} from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {Box, Card, CardContent, Typography} from '@mui/material';
 import {useWindowSize} from '../hooks/useWindowSize.tsx';
-import {blogposts} from "./HomePage.tsx";
 import remarkParse from "remark-parse";
 import {unified} from 'unified';
 import {visit} from "unist-util-visit";
 import rehypeRaw from "rehype-raw";
-import LikesButton from './LikesButton.tsx';
+import LikesButton from '../components/LikesButton.tsx';
+import {posts} from "../generated/postsIndex.ts";
+import {stripFrontmatter} from "../lib/posts.ts";
+
+const extractHeadings = (markdown: string): { level: number, text: string }[] => {
+    const tree = unified().use(remarkParse).parse(markdown);
+    const newHeadings: { level: number, text: string }[] = [];
+
+    visit(tree, 'heading', (node) => {
+        if (node.type === 'heading') {
+            const text = node.children
+                .filter((child): child is { type: 'text'; value: string } => child.type === 'text')
+                .map((child) => child.value)
+                .join('');
+            newHeadings.push({level: node.depth, text});
+        }
+    });
+
+    return newHeadings;
+};
 
 const PostPage: React.FC = () => {
-    const {postId:slug} = useParams<{ postId: string }>();
+    const {slug} = useParams<{ slug: string }>();
     const [markdownContent, setMarkdownContent] = useState("");
     const [headings, setHeadings] = useState<{ level: number, text: string } []>([]);
     const [width] = useWindowSize();
 
-    const post = blogposts.find(post => post.slug === slug);
-    const post_id = post?.id.toString();
-
-    if (!slug || !post) {
-        return <div>Page not found</div>;
-    }
+    const post = posts.find(post => post.slug === slug);
 
     useEffect(() => {
+        if (!slug) return;
         fetch(`/posts/${slug}.md`)
             .then(response => {
                 if (!response.ok) {
@@ -33,8 +47,9 @@ const PostPage: React.FC = () => {
                 return response.text();
             })
             .then(text => {
-                setMarkdownContent(text);
-                extractHeadings(text);
+                const body = stripFrontmatter(text);
+                setMarkdownContent(body);
+                setHeadings(extractHeadings(body));
             })
             .catch(error => {
                 console.error('Error fetching markdown file:', error);
@@ -42,22 +57,9 @@ const PostPage: React.FC = () => {
             });
     }, [slug]);
 
-    const extractHeadings = (markdown: string) => {
-        const tree = unified().use(remarkParse).parse(markdown);
-        const newHeadings: { level: number, text: string }[] = [];
-
-        visit(tree, 'heading', (node) => {
-            if (node.type === 'heading') {
-                const text = node.children
-                    .filter((child): child is { type: 'text'; value: string } => child.type === 'text')
-                    .map((child) => child.value)
-                    .join('');
-                newHeadings.push({level: node.depth, text});
-            }
-        });
-
-        setHeadings(newHeadings);
-    };
+    if (!slug || !post) {
+        return <div>Page not found</div>;
+    }
 
     const components: Components = {
         h1: ({...props}) => (
@@ -75,7 +77,7 @@ const PostPage: React.FC = () => {
         li: ({...props}) => (
             <li style={{textAlign: 'left'}} {...props} />
         ),
-        img: ({node, ...props}) => (
+        img: ({...props}) => (
             <img style={{maxWidth: '100%', height: 'auto'}} {...props} alt={props.alt || ''}/>
         ),
     };
@@ -105,12 +107,12 @@ const PostPage: React.FC = () => {
             paddingBottom: 4,
             alignItems: 'center',
         }}>
-            <Typography variant="h2" marginTop={4} marginBottom={2}>{post?.title}</Typography>
+            <Typography variant="h2" marginTop={4} marginBottom={2}>{post.title}</Typography>
             <Card variant="outlined"
                   sx={{marginX: width * 0.01}}>{card}</Card>
             <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}
                            rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
-            {post_id && <LikesButton postId={post_id} />}
+            <LikesButton postId={post.slug}/>
         </Box>
     );
 }
